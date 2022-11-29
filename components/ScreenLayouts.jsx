@@ -7,12 +7,17 @@ import {
   SafeAreaView,
 } from "react-native";
 
-export const DefaultScreenLayout = ({ title, buttons = [] }) => {
+export const DefaultScreenLayout = ({ title, buttons = [], content }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
+      {content}
       {buttons.map((button) => (
-        <TouchableOpacity style={styles.button} onPress={button.onPress}>
+        <TouchableOpacity
+          key={button.label}
+          style={styles.button}
+          onPress={button.onPress}
+        >
           <Text style={styles.buttonText}>{button.label}</Text>
         </TouchableOpacity>
       ))}
@@ -20,16 +25,26 @@ export const DefaultScreenLayout = ({ title, buttons = [] }) => {
   );
 };
 
-export const TimelineScreenLayout = ({ title, list, onPressListItem }) => {
+export const TimelineScreenLayout = ({
+  title,
+  content,
+  list,
+  onPressListItem,
+}) => {
   console.warn(list);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Text style={styles.title}>{title}</Text>
+      {content}
       <FlatList
         style={{ flex: 1, borderTopWidth: 1 }}
         data={list}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.listItem} onPress={onPressListItem}>
+          <TouchableOpacity
+            key={String(item.id)}
+            style={styles.listItem}
+            onPress={onPressListItem}
+          >
             <Text>{item.name}</Text>
           </TouchableOpacity>
         )}
@@ -64,4 +79,21 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderBottomWidth: 1,
   },
+  detailsItem: {
+    marginBottom: 10,
+  },
 });
+
+export const ProfileDetailsScreenLayout = ({ user, buttons }) => {
+  return (
+    <DefaultScreenLayout
+      title={`${user.name}'s Profile Details`}
+      content={
+        <>
+          <Text style={styles.detailsItem}>Followers: {user.followers}</Text>
+        </>
+      }
+      buttons={buttons}
+    />
+  );
+};
