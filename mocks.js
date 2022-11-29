@@ -26,4 +26,4 @@ export const users = [
   },
 ];
 
-export const currentUserId = 1;
+export const currentUserId = 2;

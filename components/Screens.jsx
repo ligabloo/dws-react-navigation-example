@@ -13,7 +13,16 @@ export const HomeScreen = ({ navigation }) => {
         {
           label: "Go to Current User Profile",
           onPress: () => {
-            // TODO Implement navigation logic
+            const currentUser = users.find((user) => user.id === currentUserId);
+            navigation.navigate("Profile", {
+              user: currentUser,
+            });
+          },
+        },
+        {
+          label: "Go to Timeline",
+          onPress: () => {
+            navigation.navigate("Timeline");
           },
         },
       ]}
@@ -21,13 +30,8 @@ export const HomeScreen = ({ navigation }) => {
   );
 };
 
-export const TimelineScreen = () => {
-  return <TimelineScreenLayout title="Timeline" list={users} />;
-};
-
-export const ProfileScreen = () => {
-  // TODO: remove mock, get user from somewhere else
-  const user = { name: "Name" };
+export const ProfileScreen = ({ navigation, route }) => {
+  const { user } = route.params;
 
   return (
     <DefaultScreenLayout
@@ -36,7 +40,9 @@ export const ProfileScreen = () => {
         {
           label: "Open Profile Details",
           onPress: () => {
-            // TODO: implement navigation
+            navigation.navigate("ProfileDetails", {
+              user,
+            });
           },
         },
       ]}
@@ -44,9 +50,9 @@ export const ProfileScreen = () => {
   );
 };
 
-export const ProfileDetailsScreen = () => {
-  // TODO: remove mock, get name user from Profile screen
-  const user = { name: "Name", id: 0, followers: 0 };
+export const ProfileDetailsScreen = ({ navigation, route }) => {
+  const { user } = route.params;
+
   return (
     <ProfileDetailsScreenLayout
       title="Profile Details"
@@ -55,10 +61,22 @@ export const ProfileDetailsScreen = () => {
         {
           label: "Dismiss",
           onPress: () => {
-            // TODO: implement go back action
+            navigation.goBack();
           },
         },
       ]}
+    />
+  );
+};
+
+export const TimelineScreen = ({ navigation }) => {
+  return (
+    <TimelineScreenLayout
+      title="Timeline"
+      list={users}
+      onPressListItem={(user) => {
+        navigation.navigate("Profile", { user });
+      }}
     />
   );
 };

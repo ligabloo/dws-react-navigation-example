@@ -33,9 +33,7 @@ export const TimelineScreenLayout = ({
 }) => {
   console.warn(list);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text style={styles.title}>{title}</Text>
-      {content}
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <FlatList
         style={{ flex: 1, borderTopWidth: 1 }}
         data={list}
@@ -43,13 +41,27 @@ export const TimelineScreenLayout = ({
           <TouchableOpacity
             key={String(item.id)}
             style={styles.listItem}
-            onPress={onPressListItem}
+            onPress={() => onPressListItem(item)}
           >
             <Text>{item.name}</Text>
           </TouchableOpacity>
         )}
       />
     </SafeAreaView>
+  );
+};
+
+export const ProfileDetailsScreenLayout = ({ user, buttons }) => {
+  return (
+    <DefaultScreenLayout
+      title={`${user.name}'s Profile Details`}
+      content={
+        <>
+          <Text style={styles.detailsItem}>Followers: {user.followers}</Text>
+        </>
+      }
+      buttons={buttons}
+    />
   );
 };
 
@@ -83,17 +95,3 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-
-export const ProfileDetailsScreenLayout = ({ user, buttons }) => {
-  return (
-    <DefaultScreenLayout
-      title={`${user.name}'s Profile Details`}
-      content={
-        <>
-          <Text style={styles.detailsItem}>Followers: {user.followers}</Text>
-        </>
-      }
-      buttons={buttons}
-    />
-  );
-};
