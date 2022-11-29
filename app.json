@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "17dd88af-e2eb-4052-90ec-54d3138a540f"
+      }
+    },
+    "owner": "matheusligabue"
   }
 }
